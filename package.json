@@ -1,0 +1,24 @@
+{
+  "name": "MMM-Freebox4G",
+  "version": "1.0.0-dev",
+  "description": "Display Freebox 4G informations",
+  "main": "MMM-Freebox4G.js",
+  "keywords": [
+    "freebox",
+    "4G",
+    "magicmirror"
+  ],
+  "author": "bugs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bugsounet/MMM-Freebox4G/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bugsounet/MMM-Freebox4G"
+  },
+  "homepage": "https://github.com/bugsounet/MMM-Freebox4G",
+  "dependencies": {
+    "@bugsounet/api-freebox4G": "^1.0.0"
+  }
+}
