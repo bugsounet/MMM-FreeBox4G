@@ -20,6 +20,8 @@ Plusieurs modules sont disponibles et permet l'affichage suivant:
 ![](https://raw.githubusercontent.com/bugsounet/MMM-FreeBox4G/dev/resources/FreeBox4G.png)
 
 ## Installation
+ * Ce module utilise les nouvelles libraries de MagicMirror
+ * Il est donc compatible à partir de MagicMirror v2.13.0
  * Clonez le module dans votre dossier de module de MagicMirror et exécutez `npm install` dans le répertoire du module.
 ```sh
 cd ~/MagicMirror/modules
