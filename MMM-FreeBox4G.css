@@ -24,7 +24,7 @@
     padding: 1px;
 }
 
-#FB4G_BAND {
+#FB4G_RESEAU {
     display: flex;
     font-size: 14px;
     line-height: 100%;
@@ -33,6 +33,14 @@
 
 #FB4G_VALUE {
     margin-left: 15px;
+    text-align: left;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+
+#FB4G_INFO {
+    margin-left: 13px;
     text-align: left;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -58,7 +66,8 @@
 #FB4G_ACCESS.hidden,
 #FB4G_DEBIT.hidden,
 #FB4G_CLIENT.hidden,
-#FB4G_BAND.hidden,
+#FB4G_CLIENTIP.hidden,
+#FB4G_RESEAU.hidden,
 #FB4G_CONSO.hidden,
 #FB4G_USE.hidden,
 #FB4G_ICON.hidden {

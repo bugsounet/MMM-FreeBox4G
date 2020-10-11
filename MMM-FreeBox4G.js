@@ -18,16 +18,18 @@ Module.register("MMM-FreeBox4G", {
       password: "admin"
     },
     display: {
-      activeOnly: false,
+      Signal: true,
       Icon: true,
-      Button: true,
-      BandWidth: true,
-      Rate: true,
       Client: true,
-      ClientIP: true,
-      ClientCnxType: true,
-      Conso: true,
-      Used: true
+      ClientIP: false,
+      ClientType: true,
+      Button: true,
+      Rate: true,
+      Conso: false,
+      Used: true,
+      activeOnly: false,
+      sortBy: "device",
+      textWidth: 250,
     },
     text: {
       reseau: "Réseau",
@@ -36,9 +38,7 @@ Module.register("MMM-FreeBox4G", {
       used: "Consomation Total:"
     },
     clients: [],
-    excludeMac: [],
-    sortBy: "device",
-    textWidth: 250,
+    excludeMac: []
   },
 
   start: function () {
@@ -70,22 +70,22 @@ Module.register("MMM-FreeBox4G", {
       wrapper.innerHTML = ""
       /** on prepare le DOM en cachant tout **/
 
-      /** Affichage de la bande passante **/
-      var bandWidth = document.createElement("div")
-      bandWidth.id = "FB4G_BAND"
-      bandWidth.classList.add("hidden")
+      /** Affichage info reseau **/
+      var signal = document.createElement("div")
+      signal.id = "FB4G_RESEAU"
+      signal.classList.add("hidden")
 
-      var bandWidthIcon = document.createElement("div")
-      bandWidthIcon.className = "bandwidth"
-      bandWidthIcon.classList.add("hidden")
-      bandWidthIcon.id= "FB4G_SIGNAL"
-      bandWidth.appendChild(bandWidthIcon)
+      var signalIcon = document.createElement("div")
+      signalIcon.className = "signal"
+      signalIcon.classList.add("hidden")
+      signalIcon.id= "FB4G_SIGNAL"
+      signal.appendChild(signalIcon)
 
-      var bandWidthDisplay= document.createElement("div")
-      bandWidthDisplay.id = "FB4G_VALUE"
-      bandWidth.appendChild(bandWidthDisplay)
+      var signalDisplay= document.createElement("div")
+      signalDisplay.id = "FB4G_INFO"
+      signal.appendChild(signalDisplay)
 
-      wrapper.appendChild(bandWidth)
+      wrapper.appendChild(signal)
 
       /** appareils connecté selon cache **/
       if (Object.keys(client).length > 0) {
@@ -108,7 +108,7 @@ Module.register("MMM-FreeBox4G", {
 
           var clientName = document.createElement("div")
           clientName.id = "FB4G_NAME"
-          clientName.style.width = this.config.display.ClientIP ? this.config.textWidth-80 + "px" : this.config.textWidth + "px"
+          clientName.style.width = this.config.display.ClientIP ? this.config.display.textWidth-80 + "px" : this.config.display.textWidth + "px"
           clientName.textContent = null // setName
           client.appendChild(clientName)
 
@@ -117,11 +117,11 @@ Module.register("MMM-FreeBox4G", {
           clientIP.classList.add("hidden")
           client.appendChild(clientIP)
 
-          var clientCnxType= document.createElement("div")
-          clientCnxType.id = "FB4G_ACCESS"
-          clientCnxType.className = "black"
-          clientCnxType.classList.add("hidden")
-          client.appendChild(clientCnxType)
+          var clientType= document.createElement("div")
+          clientType.id = "FB4G_ACCESS"
+          clientType.className = "black"
+          clientType.classList.add("hidden")
+          client.appendChild(clientType)
 
           var clientStatus = document.createElement("div")
           clientStatus.className = "switch"
@@ -214,17 +214,17 @@ Module.register("MMM-FreeBox4G", {
       return this.sendSocketNotification("CACHE")
     }
 
-    /** Bande Passante **/
-    var bandWidth = document.getElementById("FB4G_BAND")
-    var bandWidthIcon = bandWidth.querySelector("#FB4G_SIGNAL")
+    /** Reseau **/
+    var signal = document.getElementById("FB4G_RESEAU")
+    var signalIcon = signal.querySelector("#FB4G_SIGNAL")
 
-    var bandWidthValue = bandWidth.querySelector("#FB4G_VALUE")
-    if (this.config.display.Icon) bandWidthIcon.classList.remove("hidden")
-    if (this.config.display.BandWidth) bandWidth.classList.remove("hidden")
-    bandWidthValue.textContent = this.config.text.reseau + " "
-    bandWidthValue.textContent += (this.FB4G.InfoCnx.name ? (this.FB4G.InfoCnx.name + " " + this.FB4G.InfoCnx.cnx + this.FB4G.InfoCnx.ext) : "Aucun Service")
-    bandWidthValue.textContent += this.FB4G.InfoCnx.connected ? "" : " (Déconnecté)"
-    bandWidthIcon.className = "signal"+this.FB4G.InfoCnx.signal
+    var signalValue = signal.querySelector("#FB4G_INFO")
+    if (this.config.display.Icon) signalIcon.classList.remove("hidden")
+    if (this.config.display.Signal) signal.classList.remove("hidden")
+    signalValue.textContent = this.config.text.reseau + " "
+    signalValue.textContent += (this.FB4G.InfoCnx.name ? (this.FB4G.InfoCnx.name + " " + this.FB4G.InfoCnx.cnx + this.FB4G.InfoCnx.ext) : "Aucun Service")
+    signalValue.textContent += this.FB4G.InfoCnx.connected ? "" : " (Déconnecté)"
+    signalIcon.className = "signal"+this.FB4G.InfoCnx.signal
 
     /** Appareils connecté **/
     this.FB4G.Clients.forEach(client => {
@@ -243,7 +243,7 @@ Module.register("MMM-FreeBox4G", {
 
       /** Wifi ou Eth ? **/
       var clientAccess = clientSelect.querySelector("#FB4G_ACCESS")
-      if (this.config.display.ClientCnxType) {
+      if (this.config.display.ClientType) {
         clientAccess.classList.remove("hidden")
         if (client.active) {
           if (client.type == "Ethernet") clientAccess.className= "ethernet"

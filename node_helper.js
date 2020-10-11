@@ -93,7 +93,7 @@ module.exports = NodeHelper.create({
         show:  this.config.display.Client? this.config.display.Client : false
       }
     })
-    this.cache = this.sortBy(this.cache, this.config.sortBy)
+    this.cache = this.sortBy(this.cache, this.config.display.sortBy)
     this.sendSocketNotification("CACHE", this.cache)
     log("Cache Created.")
     this.makeResult()
