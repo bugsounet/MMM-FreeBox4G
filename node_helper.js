@@ -6,7 +6,7 @@
  */
 
 const NodeHelper = require('node_helper');
-const Router = require("@bugsounet/api-freebox4G");
+const Router = require("@bugsounet/api-freebox4g");
 log = (...args) => { /* do nothing */ };
 
 module.exports = NodeHelper.create({
