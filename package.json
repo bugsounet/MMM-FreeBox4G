@@ -1,0 +1,26 @@
+{
+  "name": "api-freebox4G",
+  "version": "1.0.0",
+  "description": "A wrapper to connect with and query the API on the Huawei 4G routers provided by FreeMobile",
+  "scripts": {
+    "preinstall": "installer/preinstall.sh"
+  },
+  "keywords": [
+    "freemobile",
+    "box4G+"
+  ],
+  "author": [
+    "Ishan Marikar <ishan.marikar@outlook.com>",
+    "@bugsounet"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bugsounet/api-freebox4G.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bugsounet/api-freebox4G/issues"
+  },
+  "homepage": "https://github.com/bugsounet/api-freebox4G#readme"
+}
+ 
