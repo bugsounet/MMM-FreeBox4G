@@ -2,7 +2,7 @@
 
 MMM-Freebox est un module pour le projet [MagicMirror](https://github.com/MichMich/MagicMirror) par [Michael Teeuw](https://github.com/MichMich).
 
-Il permet d'afficher, sur votre Mirroir, divers informations de votre `Box 4G+` de [Free Mobile](http://mobile.free.fr/la-box-4G.html) en temps réél.
+Il permet d'afficher, sur votre Mirroir, divers informations de votre `Box 4G+` de [Free Mobile](http://mobile.free.fr/la-box-4G.html) en temps réel.
 
 Plusieurs modules sont disponibles et permet l'affichage suivant:
 
