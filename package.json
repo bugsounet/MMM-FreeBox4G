@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/bugsounet/MMM-Freebox4G",
   "dependencies": {
-    "@bugsounet/api-freebox4G": "^1.0.0"
+    "@bugsounet/api-freebox4g": "^1.0.0"
   }
 }
