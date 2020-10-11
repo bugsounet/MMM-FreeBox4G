@@ -6,7 +6,7 @@
 #FB4G_LOGO {
     background-image: url(resources/free.png);
     height: 62px;
-    background-size: 100%;
+    background-size: 80%;
     background-position: center;
     background-repeat: no-repeat;
     margin-left: auto;
@@ -312,6 +312,10 @@ input.switch-round:checked + label:after {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.hidden {
+  display:none;
 }
 
 
