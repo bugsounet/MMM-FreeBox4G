@@ -1,6 +1,6 @@
 {
   "name": "MMM-Freebox4G",
-  "version": "1.0.0-dev",
+  "version": "1.0.0",
   "description": "Display Freebox 4G informations",
   "main": "MMM-Freebox4G.js",
   "keywords": [
