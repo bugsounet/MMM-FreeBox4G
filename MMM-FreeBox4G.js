@@ -87,7 +87,7 @@ Module.register("MMM-FreeBox4G", {
 
       wrapper.appendChild(bandWidth)
 
-      /** appareils connecté **/
+      /** appareils connecté selon cache **/
       if (Object.keys(client).length > 0) {
         for (let [item, value] of Object.entries(client)) {
           var id = item
@@ -96,8 +96,8 @@ Module.register("MMM-FreeBox4G", {
           var ssid = value.ssid
 
           var client = document.createElement("div")
-          client.id= "FB4G_CLIENT"
-          client.className= id
+          client.id = "FB4G_CLIENT"
+          client.className = id
           client.classList.add("hidden")
 
           var clientIcon = document.createElement("div")
@@ -108,18 +108,18 @@ Module.register("MMM-FreeBox4G", {
 
           var clientName = document.createElement("div")
           clientName.id = "FB4G_NAME"
-          clientName.style.width= this.config.display.ClientIP ? this.config.textWidth-80 + "px" : this.config.textWidth + "px"
+          clientName.style.width = this.config.display.ClientIP ? this.config.textWidth-80 + "px" : this.config.textWidth + "px"
           clientName.textContent = null // setName
           client.appendChild(clientName)
 
           var clientIP = document.createElement("div")
-          clientIP.id= "FB4G_CLIENTIP"
+          clientIP.id = "FB4G_CLIENTIP"
           clientIP.classList.add("hidden")
           client.appendChild(clientIP)
 
           var clientCnxType= document.createElement("div")
           clientCnxType.id = "FB4G_ACCESS"
-          clientCnxType.className= "black"
+          clientCnxType.className = "black"
           clientCnxType.classList.add("hidden")
           client.appendChild(clientCnxType)
 
@@ -141,7 +141,6 @@ Module.register("MMM-FreeBox4G", {
           clientStatus.appendChild(clientLabel)
 
           client.appendChild(clientStatus)
-
           wrapper.appendChild(client)
         }
       }
@@ -151,7 +150,7 @@ Module.register("MMM-FreeBox4G", {
       debit.id = "FB4G_DEBIT"
       debit.classList.add("hidden")
       var debitIcon = document.createElement("div")
-      debitIcon.id= "FB4G_STATS"
+      debitIcon.id = "FB4G_STATS"
       debitIcon.className = "stats"
       debitIcon.classList.add("hidden")
       debit.appendChild(debitIcon)
@@ -159,7 +158,7 @@ Module.register("MMM-FreeBox4G", {
       debitText.id = "FB4G_TEXT"
       debitText.textContent = this.config.text.debit
       debit.appendChild(debitText)
-      var debitDisplay= document.createElement("div")
+      var debitDisplay = document.createElement("div")
       debitDisplay.id = "FB4G_VALUE"
 
       debit.appendChild(debitDisplay)
@@ -170,7 +169,7 @@ Module.register("MMM-FreeBox4G", {
       conso.id = "FB4G_CONSO"
       conso.classList.add("hidden")
       var consoIcon = document.createElement("div")
-      consoIcon.id= "FB4G_STATS"
+      consoIcon.id = "FB4G_STATS"
       consoIcon.className = "stats"
       consoIcon.classList.add("hidden")
       conso.appendChild(consoIcon)
@@ -178,7 +177,7 @@ Module.register("MMM-FreeBox4G", {
       consoText.id = "FB4G_TEXT"
       consoText.textContent = this.config.text.conso
       conso.appendChild(consoText)
-      var consoDisplay= document.createElement("div")
+      var consoDisplay = document.createElement("div")
       consoDisplay.id = "FB4G_VALUE"
 
       conso.appendChild(consoDisplay)
@@ -197,7 +196,7 @@ Module.register("MMM-FreeBox4G", {
       useText.id = "FB4G_TEXT"
       useText.textContent = this.config.text.used
       use.appendChild(useText)
-      var useDisplay= document.createElement("div")
+      var useDisplay = document.createElement("div")
       useDisplay.id = "FB4G_VALUE"
 
       use.appendChild(useDisplay)
@@ -222,64 +221,58 @@ Module.register("MMM-FreeBox4G", {
     var bandWidthValue = bandWidth.querySelector("#FB4G_VALUE")
     if (this.config.display.Icon) bandWidthIcon.classList.remove("hidden")
     if (this.config.display.BandWidth) bandWidth.classList.remove("hidden")
-    bandWidthValue.textContent = this.config.text.reseau + " " + (this.FB4G.InfoCnx.name ? (this.FB4G.InfoCnx.name + " " + this.FB4G.InfoCnx.cnx + this.FB4G.InfoCnx.ext) : "Aucun Service")
+    bandWidthValue.textContent = this.config.text.reseau + " "
+    bandWidthValue.textContent += (this.FB4G.InfoCnx.name ? (this.FB4G.InfoCnx.name + " " + this.FB4G.InfoCnx.cnx + this.FB4G.InfoCnx.ext) : "Aucun Service")
     bandWidthValue.textContent += this.FB4G.InfoCnx.connected ? "" : " (Déconnecté)"
     bandWidthIcon.className = "signal"+this.FB4G.InfoCnx.signal
 
     /** Appareils connecté **/
-    if (this.FB4G.Clients.length > 0) {
-      this.FB4G.Clients.forEach(client => {
-        var mac = client.mac
-        var cache = this.FB4G.Cache[mac]
-        var excludeMac = this.config.excludeMac
+    this.FB4G.Clients.forEach(client => {
+      var mac = client.mac
+      var cache = this.FB4G.Cache[mac]
+      var excludeMac = this.config.excludeMac
 
-        var clientSelect = document.getElementsByClassName(mac)[0]
-        var clientName = clientSelect.querySelector("#FB4G_NAME")
-        clientName.textContent = cache.name
+      var clientSelect = document.getElementsByClassName(mac)[0]
+      var clientName = clientSelect.querySelector("#FB4G_NAME")
+      clientName.textContent = cache.name
 
-        /** Affichage IP **/
-        var clientIP = clientSelect.querySelector("#FB4G_CLIENTIP")
-        clientIP.textContent = client.ip ? client.ip.split(";")[0] : ""
-        if (this.config.display.ClientIP) clientIP.classList.remove("hidden")
+      /** Affichage IP **/
+      var clientIP = clientSelect.querySelector("#FB4G_CLIENTIP")
+      clientIP.textContent = client.ip ? client.ip.split(";")[0] : ""
+      if (this.config.display.ClientIP) clientIP.classList.remove("hidden")
 
-        /** Wifi ou Eth ? **/
-        var clientAccess = clientSelect.querySelector("#FB4G_ACCESS")
-        if (this.config.display.ClientCnxType) {
-          clientAccess.classList.remove("hidden")
-          if (client.active) {
-            if (client.type == "Ethernet") clientAccess.className= "ethernet"
-            else if (client.wifi == "2") {
-              clientAccess.className ="wifi2"
-            }
-            else if (client.wifi == "5") {
-              clientAccess.className ="wifi5"
-            }
-            else clientAccess.className = "black"
-          }
+      /** Wifi ou Eth ? **/
+      var clientAccess = clientSelect.querySelector("#FB4G_ACCESS")
+      if (this.config.display.ClientCnxType) {
+        clientAccess.classList.remove("hidden")
+        if (client.active) {
+          if (client.type == "Ethernet") clientAccess.className= "ethernet"
+          else if (client.wifi == "2") clientAccess.className ="wifi2"
+          else if (client.wifi == "5") clientAccess.className ="wifi5"
           else clientAccess.className = "black"
         }
+        else clientAccess.className = "black"
+      }
 
-        /** bouton **/
+      /** bouton **/
+      var clientStatus = clientSelect.querySelector("INPUT")
+      var clientBouton = clientSelect.querySelector(".switch")
+      var clientIcon = clientSelect.querySelector("#FB4G_ICON")
+      if (this.config.display.Button) clientBouton.classList.remove("hidden")
+      clientStatus.checked = client.active
+      clientIcon.className= cache.device + (client.active ? "1": "0")
+      if (this.config.display.Icon) clientIcon.classList.remove("hidden")
+      else clientIcon.classList.add("hidden")
 
-        var clientStatus = clientSelect.querySelector("INPUT")
-        var clientBouton = clientSelect.querySelector(".switch")
-        var clientIcon = clientSelect.querySelector("#FB4G_ICON")
-        if (this.config.display.Button) clientBouton.classList.remove("hidden")
-        clientStatus.checked = client.active
-        clientIcon.className= cache.device + (client.active ? "1": "0")
-        if (this.config.display.Icon) clientIcon.classList.remove("hidden")
-        else clientIcon.classList.add("hidden")
+      /** Exclude @mac **/
+      if (cache.show && excludeMac.indexOf(mac) == "-1") {
+        if (this.config.display.activeOnly && client.active) clientSelect.classList.remove("hidden")
+        else if (!this.config.display.activeOnly) clientSelect.classList.remove("hidden")
+      }
 
-        /** Exclude @mac **/
-        if (cache.show && excludeMac.indexOf(mac) == "-1") {
-          if (this.config.display.activeOnly && client.active) clientSelect.classList.remove("hidden")
-          else if (!this.config.display.activeOnly) clientSelect.classList.remove("hidden")
-        }
-
-        /** activeOnly **/
-        if (this.config.display.activeOnly && !client.active ) clientSelect.classList.add("hidden")
-      })
-    }
+      /** activeOnly **/
+      if (this.config.display.activeOnly && !client.active ) clientSelect.classList.add("hidden")
+    })
 
     /** Affichage Débit utilisé en temps réél **/
     var debit = document.getElementById("FB4G_DEBIT")

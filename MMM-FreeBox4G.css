@@ -17,11 +17,17 @@
 #FB4G_DEBIT,
 #FB4G_CONSO,
 #FB4G_USE,
-#FB4G_BAND,
 #FB4G_CLIENT {
     display: flex;
     font-size: 14px;
     line-height: 120%;
+    padding: 1px;
+}
+
+#FB4G_BAND {
+    display: flex;
+    font-size: 14px;
+    line-height: 100%;
     padding: 1px;
 }
 
@@ -61,11 +67,19 @@
 
 #FB4G_STATS,
 #FB4G_ACCESS,
-#FB4G_SIGNAL,
 #FB4G_ICON {
     background-image: url(resources/free.png);
     height: 16px;
     width: 16px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 0;
+}
+
+#FB4G_SIGNAL {
+    background-image: url(resources/signal0.png);
+    height: 12px;
+    width: 18px;
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 0;
@@ -289,10 +303,6 @@ input.switch-round:checked + label:after {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.hidden {
-    display:none;
 }
 
 

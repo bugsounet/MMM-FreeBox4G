@@ -71,6 +71,34 @@ module.exports = NodeHelper.create({
     resolve()
   },
 
+  makeCache: function() {
+    // Je considere qu'il y a au moins un appareil de connecté
+    this.data.clients.Hosts[0].Host.forEach(client => {
+      var Mac = client.MacAddress[0]
+      var replace = {
+        name: null,
+        device: null
+      }
+      this.config.clients.forEach(force => {
+        if (Mac == force.mac) {
+          if (force.name) replace.name = force.name
+          if (force.device) replace.device = force.device
+        }
+      })
+      this.cache[Mac] = {
+        name: replace.name ? replace.name : (client.HostName[0] ? client.HostName[0] : Mac),
+        type: client.InterfaceType[0],
+        ssid: client.AssociatedSsid[0],
+        device: replace.device? replace.device : "unknow",
+        show:  this.config.display.Client? this.config.display.Client : false
+      }
+    })
+    this.cache = this.sortBy(this.cache, this.config.sortBy)
+    this.sendSocketNotification("CACHE", this.cache)
+    log("Cache Created.")
+    this.makeResult()
+  },
+
   makeResult: function() {
     if (Object.keys(this.cache).length == 0) this.makeCache()
     else {
@@ -116,40 +144,13 @@ module.exports = NodeHelper.create({
         totalAllowed: this.convert(Number(this.data.signal.trafficmaxlimit[0]),0,2),
         usedPercent: (((Number(this.data.stats.CurrentMonthDownload[0]) + Number(this.data.stats.CurrentMonthUpload[0])) * 100) / this.data.signal.trafficmaxlimit[0]).toFixed(2) + "%"
       }
+
+      /** Send Datas ! **/
       this.sendSocketNotification("DATA", this.FB4G)
       if (this.config.dev)  {
         this.sendSocketNotification("info", this.data)
         console.log(this.FB4G)
       }
-    }
-  },
-
-  makeCache: function() {
-    if (this.data.clients.Hosts[0].Host.length > 0) {
-      this.data.clients.Hosts[0].Host.forEach(client => {
-        var Mac = client.MacAddress[0]
-        var replace = {
-          name: null,
-          device: null
-        }
-        this.config.clients.forEach(force => {
-          if (Mac == force.mac) {
-            if (force.name) replace.name = force.name
-            if (force.device) replace.device = force.device
-          }
-        })
-        this.cache[Mac] = {
-          name: replace.name ? replace.name : (client.HostName[0] ? client.HostName[0] : Mac),
-          type: client.InterfaceType[0],
-          ssid: client.AssociatedSsid[0],
-          device: replace.device? replace.device : "unknow",
-          show:  this.config.display.Client? this.config.display.Client : false
-        }
-      })
-      this.cache = this.sortBy(this.cache, this.config.sortBy)
-      this.sendSocketNotification("CACHE", this.cache)
-      log("Cache Created.")
-      this.makeResult()
     }
   },
 
@@ -319,7 +320,12 @@ module.exports = NodeHelper.create({
     return updateIntervalMillisecond
   },
 
-  /** converti les octets en G/M/K **/
+  /** converti les octets en G/M/K
+   * octects, precision, type
+   * type 0: pas d'unité
+   * type 1: Octets/s
+   * type 2: Bytes/s
+  **/
   convert: function(octet,FixTo, type=0) {
     if (octet>(1024 * 1024 * 1024)){
       octet=(octet/(1024 * 1024 * 1024)).toFixed(FixTo)
@@ -337,6 +343,7 @@ module.exports = NodeHelper.create({
     return octet
   },
 
+  /** Classe le resultat selon device, name ou mac **/
   sortBy: function (data, sort) {
     var result = {}
     /** sort by type or by name **/
@@ -351,7 +358,6 @@ module.exports = NodeHelper.create({
             arr.push(obj)
         }
       }
-
       arr.sort((a, b)=> {
         var at = a.Sort
         var bt = b.Sort
@@ -366,7 +372,6 @@ module.exports = NodeHelper.create({
               var id = mac
           }
         }
-
         result[mac] = obj[id]
       }
     } else if (sort == "mac") {
