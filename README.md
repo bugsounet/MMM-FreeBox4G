@@ -34,7 +34,6 @@ Pour afficher le module, inserez ceci dans votre ficher `config.js`
 
 ### Configuration Minimale
 
-Remplacer le tokden la valeurs de connexion fourni par votre Freebox Server.
 ```js
 {
   module: "MMM-FreeBox4G",
@@ -45,6 +44,7 @@ Remplacer le tokden la valeurs de connexion fourni par votre Freebox Server.
   }
 },
 ```
+
 ### Configuration Personalisée
 Ceci est la configuration par defaut si vous definissez aucune valeurs
 
@@ -89,7 +89,7 @@ Ceci est la configuration par defaut si vous definissez aucune valeurs
 | Option  | Description | Type | Defaut |
 | ------- | --- | --- | --- |
 | debug | Active le mode de debuguage | Boolean | false |
-| updateInterval | Delai de mise à jour en secondes | Stringr | "5s" (5 sec) |
+| updateInterval | Delai de mise à jour en secondes | String | "5s" (5 sec) |
 
 ## Champ `router: {}`
 
