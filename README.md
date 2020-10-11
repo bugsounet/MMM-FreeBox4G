@@ -114,7 +114,7 @@ Ceci est la configuration par defaut si vous definissez aucune valeurs
 | - Conso | Affiche le detail de la consomation du mois | Boolean | false |
 | - Used | Affiche la consomation utilisé selon le forfait | Boolean | true |
 | - activeOnly | Affiche uniquement les appareils connectés | Boolean | false |
-| - sortBy | Classement des appareils connectés par : type, name, mac ou null pour classement par defaut| String | "device" |
+| - sortBy | Classement des appareils connectés par: device, name ou mac| String | "device" |
 | - textWidth | Largeur du texte à afficher | Number | 250 |
 
 ## Champ `clients: []`
