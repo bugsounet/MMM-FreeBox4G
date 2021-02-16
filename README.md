@@ -177,6 +177,8 @@ Permet de ne pas afficher les appareils connectés avec certaines adresses MAC
 ```
 excludeMac: [ "DC:A6:32:37:AA:BB", "B8:27:EB:00:CC:DD"]
 ```
+## Support et aide
+Toute aide peut-être demandé sur [le forum 4th Party Modules](http://forum.bugsounet.fr)
 
 ## Donation
  [Donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TTHRH94Y4KL36&source=url), si vous aimez ce module !
